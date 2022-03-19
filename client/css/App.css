@@ -1,0 +1,192 @@
+.panel {
+  max-width: 1200px;
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #accce4;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.question span.MuiSlider-sizeMedium {
+  margin: 5px 0
+}
+
+.question p {
+  margin: 20px 0 0 0;
+}
+
+.column {
+  max-width: 1200px;
+  width: 100%;
+  height: 300vh;
+  position: fixed;
+  z-index: -100;
+  background-color: #accce4;
+}
+
+body {
+  background-color: #cbea91;
+  text-align: center;
+  margin: 0;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 20px;
+}
+
+input {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+input[type=button] {
+  height: 80px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.question label {
+  width: calc(100% - 30px);  
+  display: flex;
+  align-items: center;
+}
+
+input[type=radio] {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+
+@media (max-width: 1080px) {
+  h4 {
+    font-size: 50px;
+  }
+
+  p {
+    font-size: 40px;
+  }
+
+  input {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  input[type=button] {
+    height: 200px;
+  }
+
+  .question label {
+    width: calc(100% - 45px);  
+    display: flex;
+    align-items: center;
+  }
+  
+  input[type=radio] {
+    height: 35px;
+    width: 35px;
+    margin-right: 10px;
+  }
+
+  .MuiSlider-colorPrimary.MuiSlider-sizeMedium {
+    height: 20px;
+  }
+
+  .MuiSlider-thumbColorPrimary.MuiSlider-thumbSizeMedium {
+    width: 50px;
+    height: 50px;
+  }
+
+  .MuiSlider-colorPrimary.MuiSlider-sizeMedium .MuiSlider-markLabel {
+    top: 50px;
+    font-size: 30px;
+  }
+
+  .MuiSlider-colorPrimary.MuiSlider-sizeMedium .MuiSlider-valueLabelOpen.MuiSlider-valueLabel {
+    font-size: 30px;
+  }
+
+}
+
+.logo {
+  display: block;
+  width: 70%;
+  margin: 2px auto;
+  max-width: 400px;
+}
+
+.logo-container {
+  width: 100%;
+}
+
+.content-container {
+  width: 100%;
+  flex-grow: 4;
+}
+
+.buttons-container {
+  width: 100%;
+}
+
+.forward-button,
+.begin-button,
+.finish-button {
+  width: 49%;
+  border: 2px solid #00790a;
+  background-color: #1aaf27;
+  margin-bottom: 5px;
+}
+
+.forward-button {
+  margin-left: 2px;
+}
+
+.forward-button:hover,
+.begin-button:hover {
+  background-color: #00aa0e;
+}
+
+.question {
+  text-align: left;
+  padding: 5%;
+}
+
+.required::after {
+  content: " *";
+}
+
+.begin-button {
+  width: 100%;
+}
+
+.back-button {
+  width: 49%;
+  background-color: grey;
+  border: 2px solid rgb(78, 78, 78);
+  margin-right: 2px;
+}
+
+.errorMessage {
+  border: solid red;
+  background: rgb(255, 118, 118);
+  height: 4rem;
+  vertical-align: middle;
+  line-height: 4rem;
+  border-radius: 10px;
+}
+
+
+.description {
+  margin: 50px 30px;
+  text-align: justify;
+}
+
+.finish-button {
+  width: 90%;
+}
