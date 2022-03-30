@@ -40,7 +40,7 @@ app.post('/api/save', (req, res) => {
             const entry1 = new Rs4e({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry1.save();
             break;
-        case 'QuestUMA':
+        case 'QuestUMa':
             const entry2 = new UMa({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry2.save();
             break;
@@ -48,7 +48,7 @@ app.post('/api/save', (req, res) => {
             const entry3 = new Rs4e_emp({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry3.save();
             break;
-        case 'QuestUMAEmp':
+        case 'QuestUMaEmp':
             const entry4 = new UMaEmp({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry4.save();
             break;
@@ -116,18 +116,22 @@ app.post('/admin/login', (req, res) => {
 });
 
 app.post('/admin/excel', verifyJWT, async (req, res) => {
-    let db;
+    let db, questions;
     switch (req.query.quest) {
         case 'QuestRS4E':
             db = Rs4e;
+            questions = require('../client/quests/Quest_RS4E');
             break;
-        case 'QuestUMA':
+        case 'QuestUMa':
             db = UMa;
+            questions = require('../client/quests/Quest_UMa');
             break;
         case 'QuestRS4EEmp':
+            questions = require('../client/quests/Quest_RS4E_Emp');
             db = Rs4e_emp;
             break;
-        case 'QuestUMAEmp':
+        case 'QuestUMaEmp':
+            questions = require('../client/quests/Quest_UMa_Emp');
             db = UMaEmp;
             break;
     }
@@ -136,20 +140,21 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
     const worksheet = workbook.addWorksheet('My Users'); // New Worksheet
     const path = __dirname + '/files'; // Path to download excel  // Column for data in excel. key must match data key
 
-    let colunas = [{ header: 'Data', key: 'date', width: 10 }];
+    let colunas = [{ header: 'Data', key: 'date', width: 20 }];
 
-    const post = await db.findOne({}, {}, { sort: { created_at: -1 } });
-
-    Object.keys(post.data).forEach(function (k) {
-        if (typeof post.data[k] === 'object') {
-            Object.keys(post.data[k]).forEach(function (j) {
-                colunas.push({ header: k + '.' + j, key: k + '.' + j, width: 10 });
+    questions.elements.forEach((question) => {
+        if (question.type === 'matrix') {
+            question.elements.forEach((subquestion) => {
+                colunas.push({ header: question.name + '.' + subquestion.value, key: question.name + '.' + subquestion.value, width: 10 });
             });
         } else {
-            colunas.push({ header: k, key: k, width: 10 });
+            colunas.push({ header: question.name, key: question.name, width: 10 });
+        }
+
+        if(question.hasOther) {
+            colunas.push({ header: question.name + ".Outro", key: question.name + ".other", width: 10 });
         }
     });
-
 
     worksheet.columns = colunas;
 
@@ -157,8 +162,13 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
 
     // Looping through User data
     let counter = 1;
+
+    //Em cada entry na BD
     entries.forEach((entry) => {
+        //temp = perguntas : respostas
         const temp = entry.data;
+
+        //Percorrer as perguntas para ver quais tem respostas como objetos (Precisam de ser tratados)
         Object.keys(temp).forEach((question) => {
             if (typeof temp[question] === 'object') {
                 Object.keys(temp[question]).forEach(function (subquestion) {
@@ -168,6 +178,23 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
             }
         });
         temp['date'] = entry.date;
+
+        // const temp = {};
+
+        // Object.keys(questions).forEach((question) => {
+        //     if (typeof temp[question] === 'object') {
+        //         Object.keys(temp[question]).forEach(function (subquestion) {
+        //             temp[question + '.' + subquestion] = entry.data[question][subquestion];
+        //         });
+        //         delete temp[question];
+        //     } else {
+        //         temp[question] = entry.data[question];
+        //     }
+        // });
+        // temp['date'] = entry.date;
+
+        //Percorrer questions e num novo objeto colocar cada resposta. Como está acima
+
         worksheet.addRow(temp); // Add data in worksheet
         counter++;
     }); // Making first line in excel bold

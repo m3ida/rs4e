@@ -1,8 +1,19 @@
 import { Slider } from '@mui/material';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
 
 function Matrix(props) {
-    const questions = require('../../quests/' + props.questionsFileName)
+    const questions = require('../../quests/' + props.questionsFileName);
+
+    const [disabled, setDisabled] = useState(true);
+
+    useEffect(() => {
+        setDisabled(
+            questions.elements[props.questionIndex].otherValue && questions.elements[props.questionIndex].otherValue.length > 0
+                ? false
+                : true
+        );
+    }, [props.questionIndex]);
 
     const marks = [
         {
@@ -37,35 +48,80 @@ function Matrix(props) {
 
     const matrix = questions.elements[props.questionIndex].elements.map((row) => {
         return (
-            <div key={row.value}>
-                <p>{row.value}:</p>
+            <div key={props.questionIndex + '.' + row.value}>
+                <p>
+                    {row.other ? row.value + '. Qual? ' : row.value + ':'}
+                    {row.other ? (
+                        <input
+                            key={props.questionIndex + '.' + row.value + '.input outra'}
+                            id='otherText'
+                            onChange={(e) => {
+                                const vazio = e.target.value.length === 0;
+                                setDisabled(vazio);
+
+                                const numSubquestions = questions.elements[props.questionIndex].elements.length;
+                                const numRespondidos = Object.keys(questions.elements[props.questionIndex].value).length;
+
+                                let answered;
+                                if (!vazio) {
+                                    answered = numRespondidos === numSubquestions;
+                                } else {
+                                    answered = numRespondidos >= numSubquestions - 1;
+                                }
+                                questions.elements[props.questionIndex].answered = answered;
+
+                                console.log(answered);
+                            }}
+                            type='text'
+                            defaultValue={questions.elements[props.questionIndex].otherValue}
+                        />
+                    ) : (
+                        <></>
+                    )}
+                </p>
+
                 <Slider
+                    key={props.questionIndex + '.slider.' + row.value}
                     onChangeCommitted={(e, val) => {
                         if (questions.elements[props.questionIndex].value == undefined) {
                             questions.elements[props.questionIndex].value = {};
                         }
                         questions.elements[props.questionIndex].value[row.value] = val;
-                        if (
-                            Object.keys(questions.elements[props.questionIndex].value).length ==
-                            questions.elements[props.questionIndex].elements.length
-                        ) {
-                            questions.elements[props.questionIndex].answered = true;
+
+                        const numSubquestions = questions.elements[props.questionIndex].elements.length;
+                        const numRespondidos = Object.keys(questions.elements[props.questionIndex].value).length;
+
+                        let answered;
+                        if (questions.elements[props.questionIndex].hasOther) {
+                            if ($('#otherText').val().length > 0) {
+                                answered = numRespondidos === numSubquestions;
+                            } else {
+                                answered = numRespondidos >= numSubquestions - 1;
+                            }
+                        } else {
+                            answered = numRespondidos === numSubquestions;
                         }
+
+                        console.log(answered);
+
+                        questions.elements[props.questionIndex].answered = answered;
                     }}
                     name={row.value}
                     // valueLabelDisplay='on'
                     defaultValue={
                         questions.elements[props.questionIndex].value ? questions.elements[props.questionIndex].value[row.value] : -1
                     }
+                    disabled={row.other && disabled} //nao funsemina porque so ve no inicio
                     step={1}
                     marks={marks}
                     min={1}
                     max={7}
-                    sx={{ mt: -3, mb: '50px'}}
+                    sx={{ mt: -3, mb: '50px' }}
                 />
             </div>
         );
     });
+
     return matrix;
 }
 

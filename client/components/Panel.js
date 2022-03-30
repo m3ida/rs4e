@@ -8,36 +8,50 @@ import $ from 'jquery';
 function Panel(props) {
     const questions = require('../quests/' + props.questionsFileName);
 
+    const prevQuestionIndexRef = useRef();
+
     const [questionIndex, setQuestionIndex] = useState(-1);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
 
-    function setAnswer(answer) {
+    const setAnswer = (answer, other) => {
         const temp = { ...answers };
 
-        temp[questions.elements[questionIndex].name] = answer;
-
+        if (other) {
+            temp[questions.elements[questionIndex].name + '.other'] = answer;
+            questions.elements[questionIndex].otherValue = answer;
+        } else {
+            temp[questions.elements[questionIndex].name] = answer;
+        }
         setAnswers(temp);
-    }
+    };
 
-    function handleFinish() {
+    const handleFinish = () => {
         const quest = window.location.pathname.replace('/', '');
 
         $.post('/api/save?quest=' + quest, { answers: JSON.stringify(answers) });
-    }
+    };
 
-    const prevQuestionIndexRef = useRef();
+    const handleCleanUp = (aObject) => {
+        delete aObject.value;
+        delete aObject.answered;
+    };
+
     useEffect(() => {
         if (questionIndex >= questions.elements.length) {
             handleFinish();
         } else {
-            if (questionIndex > -1 && questions.elements[questionIndex].depends != null) {
+            if (questionIndex > -1 && questions.elements[questionIndex].depends) {
                 const dependency = questions.elements[questionIndex].depends;
 
-                if (answers[dependency.question] !== dependency.value) {
-                    delete questions.elements[questionIndex].value;
-                    delete questions.elements[questionIndex].answered;
+                if (
+                    (answers[dependency.question] !== dependency.value && dependency.value) ||
+                    (!dependency.value && answers[dependency.question] === 'Não')
+                ) {
+                    handleCleanUp(questions.elements[questionIndex]);
+
                     delete answers[questions.elements[questionIndex].name];
+
                     if (questionIndex < prevQuestionIndex) {
                         setQuestionIndex(questionIndex - 1);
                     } else {
@@ -50,8 +64,7 @@ function Panel(props) {
                 setAnswers({});
                 questions.elements.forEach((element) => {
                     if (element.type == 'radiogroup' || element.type == 'text' || element.type == 'matrix') {
-                        delete element.value;
-                        delete element.answered;
+                        handleCleanUp(element);
                     }
                 });
             }
@@ -64,24 +77,31 @@ function Panel(props) {
     return (
         <>
             <div className='panel'>
-                <div className='column'></div>
+                <div className='column' />
                 <div className='logo-container'>
-                    <LinearProgress
-                        variant='determinate'
-                        sx={{
-                            height: 15,
-                            color: 'success',
-                        }}
-                        color='success'
-                        value={questionIndex < questions.elements.length ? (questionIndex / (questions.elements.length - 1)) * 100 : 100}
-                    />
-                    <img className='logo' src={logo} alt='Logo'></img>
+                    {questionIndex !== -1 ? (
+                        <LinearProgress
+                            variant='determinate'
+                            sx={{
+                                height: 15,
+                                color: 'success',
+                            }}
+                            color='success'
+                            value={
+                                questionIndex < questions.elements.length ? (questionIndex / (questions.elements.length - 1)) * 100 : 100
+                            }
+                        />
+                    ) : (
+                        <></>
+                    )}
+
+                    <img className='logo' src={logo} alt='Logo' loading='eager' />
                 </div>
-                <div className='content-container'>
+                <div className='content-container animate__animated animate__faster'>
                     {msgErro}
                     <Question questionIndex={questionIndex} questionsFileName={props.questionsFileName}></Question>
                 </div>
-                <div className='buttons-container'>
+                {/* <div className='buttons-container'> */}
                     <Buttons
                         setMsgErro={setMsgErro}
                         setQuestionIndex={setQuestionIndex}
@@ -89,7 +109,7 @@ function Panel(props) {
                         setAnswer={setAnswer}
                         questionsFileName={props.questionsFileName}
                     />
-                </div>
+                {/* </div> */}
             </div>
         </>
     );

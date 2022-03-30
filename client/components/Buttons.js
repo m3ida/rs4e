@@ -4,77 +4,76 @@ import React from 'react';
 function Buttons(props) {
     const questions = require('../quests/' + props.questionsFileName);
 
+    const buttonAnimation = (event) => {
+        const circle = document.createElement('div');
+        const x = event.nativeEvent.layerX;
+        const y = event.nativeEvent.layerY;
+        circle.classList.add('circle');
+        circle.style.left = `${x}px`;
+        circle.style.top = `${y}px`;
+        event.target.appendChild(circle);
+        setTimeout(() => {
+            circle.remove();
+        }, 250);
+    };
+
+    const changeQuestion = (event, forward) => {
+        $('.content-container').removeClass('animate__backInLeft');
+        $('.content-container').removeClass('animate__backInRight');
+        buttonAnimation(event);
+
+        if (forward) $('.content-container').addClass('animate__backOutLeft');
+        else $('.content-container').addClass('animate__backOutRight');
+
+        setTimeout(() => {
+            props.setMsgErro();
+            if (forward) {
+                props.setQuestionIndex(props.questionIndex + 1);
+                $('.content-container').removeClass('animate__backOutLeft');
+                $('.content-container').addClass('animate__backInRight');
+            } else {
+                props.setQuestionIndex(props.questionIndex - 1);
+                $('.content-container').removeClass('animate__backOutRight');
+                $('.content-container').addClass('animate__backInLeft');
+            }
+        }, 200);
+    };
+
     if (props.questionIndex === -1) {
         return (
-            <input type='button' className='begin-button' value='Começar' onClick={() => props.setQuestionIndex(props.questionIndex + 1)} />
+            <div className='button begin-button special' onClick={(e) => changeQuestion(e, true)}>
+                <p>COMEÇAR</p>
+            </div>
         );
-    } else if (props.questionIndex === questions.elements.length - 1) {
+    } else if (props.questionIndex < questions.elements.length) {
         return (
-            <>
-                <input
-                    type='button'
-                    className='back-button'
-                    value='Voltar'
-                    onClick={() => {
-                        props.setQuestionIndex(props.questionIndex - 1);
-                        props.setMsgErro();
-                    }}
-                />
-                <input
-                    type='button'
-                    className='forward-button'
-                    value='Concluir'
-                    onClick={() => {
+            <div className='buttons-container'>
+                <div className='button special back-button' onClick={(e) => changeQuestion(e, false)}>
+                    <p>VOLTAR</p>
+                </div>
+                <div
+                    className='button special forward-button'
+                    onClick={(e) => {
+                        buttonAnimation(e);
                         if (questions.elements[props.questionIndex].isRequired && !questions.elements[props.questionIndex].answered) {
                             props.setMsgErro(<p className='errorMessage'>É de resposta obrigatória.</p>);
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
                         } else {
-                            props.setAnswer(questions.elements[props.questionIndex].value);
-                            props.setMsgErro();
-                            props.setQuestionIndex(props.questionIndex + 1);
+                            props.setAnswer(questions.elements[props.questionIndex].value, false);
+
+                            if (questions.elements[props.questionIndex].hasOther && $('#otherText') && $('#otherText').val().length > 0) {
+                                props.setAnswer($('#otherText').val(), true);
+                            }
+                            changeQuestion(e, true);
                         }
                     }}
-                />
-            </>
-        );
-    } else if(props.questionIndex < questions.elements.length){
-        return (
-            <>
-                <input
-                    type='button'
-                    className='back-button'
-                    value='Voltar'
-                    onClick={() => {
-                        props.setQuestionIndex(props.questionIndex - 1);
-                        props.setMsgErro();
-                    }}
-                />
-                <input
-                    type='button'
-                    className='forward-button'
-                    value='Próxima'
-                    onClick={function (e) {
-                        if (questions.elements[props.questionIndex].isRequired && !questions.elements[props.questionIndex].answered) {
-                            props.setMsgErro(<p className='errorMessage'>É de resposta obrigatória.</p>);
-                        } else {
-                            props.setAnswer(questions.elements[props.questionIndex].value);
-                            // answers[questions.elements[props.questionIndex].name] = questions.elements[props.questionIndex].value;
-
-                            $('.question:not(.answered) input[type=radio]').prop('checked', false);
-                            $('.MuiSlider-track').css('width', '0%');
-                            $('.MuiSlider-thumb').css('left', '0%');
-                            $('.MuiSlider-thumb input').attr('aria-valuenow', -1);
-                            $('.MuiSlider-thumb input').attr('value', -1);
-                            $('.MuiSlider-valueLabelLabel').text('-1');
-
-                            props.setQuestionIndex(props.questionIndex + 1);
-                            props.setMsgErro();
-                        }
-                    }}
-                />
-            </>
+                >
+                    <p>{props.questionIndex === questions.elements.length - 1 ? 'CONCLUIR' : 'PRÓXIMA'}</p>
+                </div>
+            </div>
         );
     } else {
-        return (null)
+        return null;
     }
 }
 

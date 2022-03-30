@@ -2,7 +2,7 @@ import Answer from './Answer';
 import React from 'react';
 
 function Question(props) {
-    const questions = require('../quests/' + props.questionsFileName)
+    const questions = require('../quests/' + props.questionsFileName);
 
     if (props.questionIndex < questions.elements.length) {
         const question = questions.elements[props.questionIndex];
@@ -26,13 +26,13 @@ function Question(props) {
             return (
                 <>
                     <h4>Participantes do curso intensivo de empreendedorismo do RS4E</h4>
-                    <p>Formulário relativo à participação no projeto RS4E</p>
+                    <p style={{ fontWeight: 'bold' }}>Formulário relativo à participação no projeto RS4E</p>
                     <div className='description'>{descriptionHTML}</div>
                 </>
             );
         }
     } else {
-        return (<h2>Obrigado pelo seu tempo.</h2>);
+        return <h2>Obrigado pelo seu tempo.</h2>;
     }
 }
 

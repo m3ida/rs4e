@@ -73,17 +73,28 @@ function Admin() {
                     <input type='password' name='password' autoComplete='off'></input>
                 </p>
                 {error ? <p className='errorMessage'>{error}</p> : ''}
-                <button onClick={handleLogin}>Sign In</button>
+                <button className='signin-button' onClick={handleLogin}>Sign In</button>
             </form>
         );
     } else {
         return (
             <>
-                {error ? <p className='errorMessage'>{error}</p> : ''}
-                <button onClick={() => handleLogout}>Sign Out</button>
-                <button type='button' onClick={() => downloadFile('QuestRS4E')}>
-                    Download RS4E
-                </button>
+                <button className='signout-button' onClick={handleLogout}>Sign Out</button>
+                <div className='download-container'>
+                    {error ? <p className='errorMessage'>{error}</p> : ''}
+                    <button type='button' onClick={() => downloadFile('QuestRS4E')}>
+                        Download RS4E
+                    </button>
+                    <button type='button' onClick={() => downloadFile('QuestUMa')}>
+                        Download QuestUMA
+                    </button>
+                    <button type='button' onClick={() => downloadFile('QuestRS4EEmp')}>
+                        Download QuestRS4EEmp
+                    </button>
+                    <button type='button' onClick={() => downloadFile('QuestUMaEmp')}>
+                        Download QuestUMAEmp
+                    </button>
+                </div>
             </>
         );
     }

@@ -3,6 +3,7 @@ export default () => {
     <html lang="en">
       <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5">
         <link rel="icon" href="./favicon.ico">
         <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
         <title>Questionário</title>

@@ -2,11 +2,11 @@ import $ from 'jquery';
 import React from 'react';
 
 function Radiogroup(props) {
-    const questions = require('../../quests/' + props.questionsFileName)
+    const questions = require('../../quests/' + props.questionsFileName);
 
     let choicesHTML = questions.elements[props.questionIndex].choices.map((answer) => {
         return (
-            <p key={answer}>
+            <p key={props.questionIndex + '.' + answer}>
                 <label>
                     <input
                         defaultChecked={questions.elements[props.questionIndex].value === answer ? true : false}
@@ -26,7 +26,7 @@ function Radiogroup(props) {
 
     if (questions.elements[props.questionIndex].hasOther === true) {
         const hasOther = (
-            <p key={'hasOther'}>
+            <p key={props.questionIndex + '.' + 'hasOther'}>
                 <input
                     defaultChecked={
                         questions.elements[props.questionIndex].value !== undefined &&
@@ -80,7 +80,7 @@ function Radiogroup(props) {
 
     if (questions.elements[props.questionIndex].simQual === true) {
         const simQual = (
-            <p key={'simQual'}>
+            <p key={props.questionIndex + '.' + 'simQual'}>
                 <input
                     defaultChecked={
                         questions.elements[props.questionIndex].value !== undefined &&

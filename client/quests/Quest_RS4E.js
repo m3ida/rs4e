@@ -1,6 +1,6 @@
 const surveyJSON = {
     description: [
-        'Uma equipa de docentes da Universidade da Madeira (UMa), coordenada pela Professora Doutora Carmen Freitas,' +
+        'Uma equipa de docentes da Universidade da Madeira (UMa), coordenada pela Professora Doutora Carmen Freitas, ' +
             'pretende realizar um trabalho de investigação com o objetivo de avaliar a intenção empreendedora dos alunos ' +
             'graduados pela Universidade da Madeira (UMa) que participaram no Curso Intensivo em Empreendedorismo e ' +
             'Inovação Empresarial RS4E. ',
@@ -246,7 +246,8 @@ const surveyJSON = {
             name: 'Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na Região Autónoma da Madeira (RAM)',
             description: 'Avalie de 1 (desconhece completamente) a 7 (conhecimento total)',
             type: 'matrix',
-            // isRequired: true,
+            isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'StartUp Madeira',
@@ -267,7 +268,7 @@ const surveyJSON = {
                     value: 'Instituto de Emprego da Madeira, IP-RAM',
                 },
                 {
-                    value: 'Outra. Qual?',
+                    value: 'Outra',
                     other: true,
                 },
             ],
@@ -275,8 +276,10 @@ const surveyJSON = {
         // {
         //     name: 'Qual o nome da associação empresarial que conhece?',
         //     type: 'value',
-        //     visibleIf:
-        //         "{Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na Região Autónoma da Madeira (RAM)} = 'Outra'",
+        //     depends: {
+        //         question: 'Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na Região Autónoma da Madeira (RAM)',
+        //         value: 'Outra',
+        //     },
         //     placeHolder: 'Escreva aqui',
         //     isRequired: true,
         // },
@@ -285,6 +288,7 @@ const surveyJSON = {
             type: 'matrix',
             description: 'Avalie de 1 (desconhece completamente) a 7 (conhece completamente)',
             isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'Treino específico para jovens empreendedores',
@@ -305,7 +309,7 @@ const surveyJSON = {
                     value: 'Serviços de consultoria em condições favoráveis',
                 },
                 {
-                    value: 'Outra. Qual?',
+                    value: 'Outra',
                     other: true,
                 },
             ],
@@ -346,6 +350,7 @@ const surveyJSON = {
             description: 'Avalie de 1 (atração mínima) a 7 (atração máxima)',
             type: 'matrix',
             isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'Trabalho assalariado/dependente/assalariado',
