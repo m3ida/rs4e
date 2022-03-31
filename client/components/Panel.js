@@ -77,7 +77,6 @@ function Panel(props) {
     return (
         <>
             <div className='panel'>
-                <div className='column' />
                 <div className='logo-container'>
                     {questionIndex !== -1 ? (
                         <LinearProgress

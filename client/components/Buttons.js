@@ -14,7 +14,7 @@ function Buttons(props) {
         event.target.appendChild(circle);
         setTimeout(() => {
             circle.remove();
-        }, 250);
+        }, 500);
     };
 
     const changeQuestion = (event, forward) => {
