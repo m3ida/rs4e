@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import $ from 'jquery';
+import '../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
+import '../../node_modules/@fortawesome/fontawesome-free/css/solid.css';
 
 function Admin() {
     const [user, setUser] = useState(null);
@@ -27,6 +29,7 @@ function Admin() {
                 sessionStorage.setItem('token', response.token);
 
                 setTokenRequest(response.token);
+                setError('');
             } else {
                 setError('Utilizador inválido');
             }
@@ -73,25 +76,33 @@ function Admin() {
                     <input type='password' name='password' autoComplete='off'></input>
                 </p>
                 {error ? <p className='errorMessage'>{error}</p> : ''}
-                <button className='signin-button' onClick={handleLogin}>Sign In</button>
+                <button className='signin-button' onClick={handleLogin}>
+                    Sign In
+                </button>
             </form>
         );
     } else {
         return (
             <>
-                <button className='signout-button' onClick={handleLogout}>Sign Out</button>
+                <button className='signout-button' onClick={handleLogout}>
+                    <i className='fas fa-sign-out-alt'></i> Sign Out
+                </button>
                 <div className='download-container'>
                     {error ? <p className='errorMessage'>{error}</p> : ''}
-                    <button type='button' onClick={() => downloadFile('QuestRS4E')}>
+                    <button onClick={() => downloadFile('QuestRS4E')}>
+                        <i class='fas fa-download'></i>&nbsp;
                         Download RS4E
                     </button>
-                    <button type='button' onClick={() => downloadFile('QuestUMa')}>
+                    <button onClick={() => downloadFile('QuestUMa')}>
+                        <i class='fas fa-download'></i>&nbsp;
                         Download QuestUMA
                     </button>
-                    <button type='button' onClick={() => downloadFile('QuestRS4EEmp')}>
+                    <button onClick={() => downloadFile('QuestRS4EEmp')}>
+                        <i class='fas fa-download'></i>&nbsp;
                         Download QuestRS4EEmp
                     </button>
-                    <button type='button' onClick={() => downloadFile('QuestUMaEmp')}>
+                    <button onClick={() => downloadFile('QuestUMaEmp')}>
+                        <i class='fas fa-download'></i>&nbsp;
                         Download QuestUMAEmp
                     </button>
                 </div>

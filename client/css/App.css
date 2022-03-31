@@ -247,13 +247,7 @@ input[type=radio] {
   border-radius: 10px;
   border: none;
   box-shadow: 2px 5px rgba(0, 0, 0, 0.295);
-}
-
-.signout-button::before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 400;
-  font-size: 30px;
-  content: "\f08b     "
+  cursor: pointer;
 }
 
 .download-container {
@@ -272,13 +266,7 @@ input[type=radio] {
   background-color: rgba(76, 0, 255, 0.767);
   border: none;
   box-shadow: 2px 5px rgba(0, 0, 0, 0.295);
-}
-
-.download-container button::before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 400;
-  font-size: 30px;
-  content: "\f0ab     "
+  cursor: pointer;
 }
 
 @media (max-width: 1024px) {
