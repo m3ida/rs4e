@@ -15,7 +15,12 @@ function Question(props) {
                         {props.questionIndex + 1}. {question.title || question.name}
                     </h4>
                     <p>{question.description}</p>
-                    <Answer questionsFileName={props.questionsFileName} questionIndex={props.questionIndex} />
+                    <Answer
+                        questionsFileName={props.questionsFileName}
+                        onChange={() => console.log('hey')}
+                        questionIndex={props.questionIndex}
+                        setDisabledButton={props.setDisabledButton}
+                    />
                 </div>
             );
         } else {

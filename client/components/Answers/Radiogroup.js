@@ -15,7 +15,7 @@ function Radiogroup(props) {
                         value={props.questionIndex + '.' + answer}
                         onClick={() => {
                             questions.elements[props.questionIndex].value = answer;
-                            questions.elements[props.questionIndex].answered = true;
+                            props.setAnswered(true);
                         }}
                     />
                     {answer}
@@ -44,10 +44,10 @@ function Radiogroup(props) {
                     onClick={() => {
                         if ($('input[type=text]').val() !== '') {
                             questions.elements[props.questionIndex].value = $('input[type=text]').val();
-                            questions.elements[props.questionIndex].answered = true;
+                            props.setAnswered(true);
                         } else {
                             delete questions.elements[props.questionIndex].value;
-                            delete questions.elements[props.questionIndex].answered;
+                            props.setAnswered(false);
                         }
                     }}
                 />
@@ -64,10 +64,10 @@ function Radiogroup(props) {
                         if ($('#hasOtherRadio').is(':checked')) {
                             if (e.target.value === '') {
                                 delete questions.elements[props.questionIndex].value;
-                                delete questions.elements[props.questionIndex].answered;
+                                props.setAnswered(false);
                             } else {
                                 questions.elements[props.questionIndex].value = e.target.value;
-                                questions.elements[props.questionIndex].answered = true;
+                                props.setAnswered(true);
                             }
                         }
                     }}
@@ -98,10 +98,10 @@ function Radiogroup(props) {
                     onClick={() => {
                         if ($('input[type=text]').val() !== '') {
                             questions.elements[props.questionIndex].value = $('input[type=text]').val();
-                            questions.elements[props.questionIndex].answered = true;
+                            props.setAnswered(true);
                         } else {
                             delete questions.elements[props.questionIndex].value;
-                            delete questions.elements[props.questionIndex].answered;
+                            props.setAnswered(false);
                         }
                     }}
                 />
@@ -119,10 +119,10 @@ function Radiogroup(props) {
                         if ($('#simQualRadio').is(':checked')) {
                             if (e.target.value === '') {
                                 delete questions.elements[props.questionIndex].value;
-                                delete questions.elements[props.questionIndex].answered;
+                                props.setAnswered(false);
                             } else {
                                 questions.elements[props.questionIndex].value = e.target.value;
-                                questions.elements[props.questionIndex].answered = true;
+                                props.setAnswered(true);
                             }
                         }
                     }}

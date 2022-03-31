@@ -13,6 +13,7 @@ function Panel(props) {
     const [questionIndex, setQuestionIndex] = useState(-1);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
+    const [disabledButton, setDisabledButton] = useState(false);
 
     const setAnswer = (answer, other) => {
         const temp = { ...answers };
@@ -54,8 +55,10 @@ function Panel(props) {
 
                     if (questionIndex < prevQuestionIndex) {
                         setQuestionIndex(questionIndex - 1);
+                        setDisabledButton(true);
                     } else {
                         setQuestionIndex(questionIndex + 1);
+                        setDisabledButton(false);
                     }
                 }
             }
@@ -98,16 +101,22 @@ function Panel(props) {
                 </div>
                 <div className='content-container animate__animated animate__faster'>
                     {msgErro}
-                    <Question questionIndex={questionIndex} questionsFileName={props.questionsFileName}></Question>
+                    <Question
+                        setDisabledButton={setDisabledButton}
+                        questionIndex={questionIndex}
+                        questionsFileName={props.questionsFileName}
+                    ></Question>
                 </div>
                 {/* <div className='buttons-container'> */}
-                    <Buttons
-                        setMsgErro={setMsgErro}
-                        setQuestionIndex={setQuestionIndex}
-                        questionIndex={questionIndex}
-                        setAnswer={setAnswer}
-                        questionsFileName={props.questionsFileName}
-                    />
+                <Buttons
+                    setMsgErro={setMsgErro}
+                    disabledButton={disabledButton}
+                    setDisabledButton={setDisabledButton}
+                    setQuestionIndex={setQuestionIndex}
+                    questionIndex={questionIndex}
+                    setAnswer={setAnswer}
+                    questionsFileName={props.questionsFileName}
+                />
                 {/* </div> */}
             </div>
         </>

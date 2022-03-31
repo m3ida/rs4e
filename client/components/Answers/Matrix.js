@@ -70,7 +70,7 @@ function Matrix(props) {
                                 }
                                 questions.elements[props.questionIndex].answered = answered;
 
-                                console.log(answered);
+                                props.setAnswered(answered);
                             }}
                             type='text'
                             defaultValue={questions.elements[props.questionIndex].otherValue}
@@ -102,9 +102,8 @@ function Matrix(props) {
                             answered = numRespondidos === numSubquestions;
                         }
 
-                        console.log(answered);
-
                         questions.elements[props.questionIndex].answered = answered;
+                        props.setAnswered(answered);
                     }}
                     name={row.value}
                     // valueLabelDisplay='on'

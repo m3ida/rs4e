@@ -27,10 +27,10 @@ function Simqual(props) {
                         onClick={() => {
                             if ($('input[type=text]').val() !== '') {
                                 questions.elements[props.questionIndex].value = $('input[type=text]').val();
-                                questions.elements[props.questionIndex].answered = true;
+                                props.setAnswered(true);
                             } else {
                                 delete questions.elements[props.questionIndex].value;
-                                delete questions.elements[props.questionIndex].answered;
+                                props.setAnswered(false);
                             }
                         }}
                     />
@@ -49,10 +49,10 @@ function Simqual(props) {
                         if ($('#sim').is(':checked')) {
                             if (e.target.value === '') {
                                 delete questions.elements[props.questionIndex].value;
-                                delete questions.elements[props.questionIndex].answered;
+                                props.setAnswered(false);
                             } else {
                                 questions.elements[props.questionIndex].value = e.target.value;
-                                questions.elements[props.questionIndex].answered = true;
+                                props.setAnswered(true);
                             }
                         }
                     }}
@@ -67,7 +67,7 @@ function Simqual(props) {
                         name={questions.elements[props.questionIndex].name}
                         onClick={() => {
                             questions.elements[props.questionIndex].value = 'Não';
-                            questions.elements[props.questionIndex].answered = true;
+                            props.setAnswered(true);
                         }}
                     />
                     Não

@@ -29,10 +29,12 @@ function Buttons(props) {
             props.setMsgErro();
             if (forward) {
                 props.setQuestionIndex(props.questionIndex + 1);
+                props.setDisabledButton(false);
                 $('.content-container').removeClass('animate__backOutLeft');
                 $('.content-container').addClass('animate__backInRight');
             } else {
                 props.setQuestionIndex(props.questionIndex - 1);
+                props.setDisabledButton(true);
                 $('.content-container').removeClass('animate__backOutRight');
                 $('.content-container').addClass('animate__backInLeft');
             }
@@ -52,7 +54,7 @@ function Buttons(props) {
                     <p>VOLTAR</p>
                 </div>
                 <div
-                    className='button special forward-button'
+                    className={props.disabledButton ? 'button special forward-button' : 'button special forward-button disabled'}
                     onClick={(e) => {
                         buttonAnimation(e);
                         if (questions.elements[props.questionIndex].isRequired && !questions.elements[props.questionIndex].answered) {

@@ -37,10 +37,10 @@ function Email(props) {
                         onClick={() => {
                             if ($('input[type=email]').val() !== '' && validateEmail($('input[type=email]').val())) {
                                 questions.elements[props.questionIndex].value = $('input[type=email]').val();
-                                questions.elements[props.questionIndex].answered = true;
+                                props.setAnswered(true);
                             } else {
                                 delete questions.elements[props.questionIndex].value;
-                                delete questions.elements[props.questionIndex].answered;
+                                props.setAnswered(false);
                             }
                         }}
                     />
@@ -70,11 +70,11 @@ function Email(props) {
                             if ($('#simEmail').is(':checked')) {
                                 if (e.target.value === '') {
                                     delete questions.elements[props.questionIndex].value;
-                                    delete questions.elements[props.questionIndex].answered;
+                                    props.setAnswered(false);
                                 } else {
                                     if (validateEmail($('input[type=email]').val())) {
                                         questions.elements[props.questionIndex].value = e.target.value;
-                                        questions.elements[props.questionIndex].answered = true;
+                                        props.setAnswered(true);
                                     }
                                 }
                             }
@@ -91,7 +91,7 @@ function Email(props) {
                         name={questions.elements[props.questionIndex].name}
                         onClick={() => {
                             questions.elements[props.questionIndex].value = 'Não';
-                            questions.elements[props.questionIndex].answered = true;
+                            props.setAnswered(true);
                         }}
                     />
                     Não

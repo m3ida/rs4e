@@ -42,7 +42,7 @@ function Rating(props) {
                             questions.elements[props.questionIndex].value = {};
                         }
                         questions.elements[props.questionIndex].value = val;
-                        questions.elements[props.questionIndex].answered = true;
+                        props.setAnswered(true);
                     }}
                     name={questions.elements[props.questionIndex].name}
                     valueLabelDisplay='auto'
