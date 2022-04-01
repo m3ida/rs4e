@@ -1,7 +1,7 @@
 import express from 'express';
 import devBundle from './devBundle';
 import path from 'path';
-import template from './../template';
+// import template from './../template';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
@@ -151,8 +151,8 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
             colunas.push({ header: question.name, key: question.name, width: 10 });
         }
 
-        if(question.hasOther) {
-            colunas.push({ header: question.name + ".Outro", key: question.name + ".other", width: 10 });
+        if (question.hasOther) {
+            colunas.push({ header: question.name + '.Outro', key: question.name + '.other', width: 10 });
         }
     });
 
@@ -213,7 +213,7 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.status(200).send(template());
+    res.status(200).sendFile(path.resolve(__dirname + '/../index.html'));
 });
 
 app.listen(port, (err) => {

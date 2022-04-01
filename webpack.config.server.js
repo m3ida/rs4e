@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CURRENT_WORKING_DIR = process.cwd();
 const nodeExternals = require('webpack-node-externals');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
     name: 'server',
     entry: [path.join(CURRENT_WORKING_DIR, './server/server.js')],
@@ -32,7 +33,12 @@ const config = {
                     },
                 ],
             },
-        ]
+        ],
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve('./index.html'),
+        }),
+    ],
 };
 module.exports = config;
