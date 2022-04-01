@@ -12,13 +12,13 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.(jsx|js)$/i,
                 exclude: /node_modules/,
                 use: ['babel-loader'],
             },
             {
                 test: /\.css$/,
-                use: 'css-loader',
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
