@@ -35,6 +35,8 @@ function Email(props) {
                         }
                         name={questions.elements[props.questionIndex].name}
                         onClick={() => {
+                            $("input[type=email]").prop("disabled", false)
+
                             if ($('input[type=email]').val() !== '' && validateEmail($('input[type=email]').val())) {
                                 questions.elements[props.questionIndex].value = $('input[type=email]').val();
                                 props.setAnswered(true);
@@ -56,12 +58,15 @@ function Email(props) {
                                 ? questions.elements[props.questionIndex].value
                                 : ''
                         }
+                        disabled="true"
                         onChange={(e) => {
                             if (!validateEmail(e.target.value)) {
                                 setEmailTooltip(true);
                                 setEmailValidation('Email inválido!');
+                                props.setAnswered(false);
                             } else {
                                 setEmailValidation('Email válido!');
+                                props.setAnswered(true);
                                 setTimeout(function () {
                                     setEmailTooltip(false);
                                 }, 1000);
@@ -90,6 +95,7 @@ function Email(props) {
                         value='Não'
                         name={questions.elements[props.questionIndex].name}
                         onClick={() => {
+                            $("input[type=email]").prop("disabled", true)
                             questions.elements[props.questionIndex].value = 'Não';
                             props.setAnswered(true);
                         }}

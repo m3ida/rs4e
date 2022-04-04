@@ -10,7 +10,7 @@ function Panel(props) {
 
     const prevQuestionIndexRef = useRef();
 
-    const [questionIndex, setQuestionIndex] = useState(-1);
+    const [questionIndex, setQuestionIndex] = useState(37);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
     const [disabledButton, setDisabledButton] = useState(false);
