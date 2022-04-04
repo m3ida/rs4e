@@ -58,7 +58,7 @@ function Email(props) {
                                 ? questions.elements[props.questionIndex].value
                                 : ''
                         }
-                        disabled="true"
+                        disabled={true}
                         onChange={(e) => {
                             if (!validateEmail(e.target.value)) {
                                 setEmailTooltip(true);

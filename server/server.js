@@ -35,20 +35,20 @@ const CURRENT_WORKING_DIR = process.cwd();
 app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
 
 app.post('/api/save', (req, res) => {
-    switch (req.query.quest) {
-        case 'QuestRS4E':
+    switch (req.query.quest.toLocaleLowerCase()) {
+        case 'questrs4e':
             const entry1 = new Rs4e({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry1.save();
             break;
-        case 'QuestUMa':
+        case 'questuma':
             const entry2 = new UMa({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry2.save();
             break;
-        case 'QuestRS4EEmp':
+        case 'questrs4eemp':
             const entry3 = new Rs4e_emp({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry3.save();
             break;
-        case 'QuestUMaEmp':
+        case 'questumaemp':
             const entry4 = new UMaEmp({ date: new Date(), data: JSON.parse(req.body.answers) });
             entry4.save();
             break;
