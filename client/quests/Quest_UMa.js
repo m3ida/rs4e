@@ -240,6 +240,7 @@ const surveyJSON = {
             description: 'Avalie de 1 (desconhece completamente) a 7 (conhecimento total)',
             type: 'matrix',
             isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'StartUp Madeira',
@@ -278,6 +279,7 @@ const surveyJSON = {
             type: 'matrix',
             description: 'Avalie de 1 (desconhece completamente) a 7 (conhece completamente)',
             isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'Treino específico para jovens empreendedores',
@@ -339,6 +341,7 @@ const surveyJSON = {
             description: 'Avalie de 1 (atração mínima) a 7 (atração máxima)',
             type: 'matrix',
             isRequired: true,
+            hasOther: true,
             elements: [
                 {
                     value: 'Trabalho assalariado/dependente/assalariado',
