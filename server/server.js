@@ -9,10 +9,14 @@ import bcrypt from 'bcrypt';
 const excelJS = require('exceljs');
 
 const app = express();
+
+const router = express.Router();
+app.use('/rs4e', router);
+
 let port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use(
+router.use(bodyParser.json());
+router.use(
     bodyParser.urlencoded({
         extended: false,
     })
@@ -29,12 +33,12 @@ const User = mongoose.model('User', {
     password: String,
 });
 
-devBundle.compile(app);
+devBundle.compile(router);
 
 const CURRENT_WORKING_DIR = process.cwd();
-app.use('/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
+router.use('/rs4e/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
 
-app.post('/api/save', (req, res) => {
+router.post('/api/save', (req, res) => {
     switch (req.query.quest.toLocaleLowerCase()) {
         case 'questrs4e':
             const entry1 = new Rs4e({ date: new Date(), data: JSON.parse(req.body.answers) });
@@ -71,11 +75,11 @@ function verifyJWT(req, res, next) {
     }
 }
 
-app.post('/api/admin', verifyJWT, (req, res) => {
+router.post('/api/admin', verifyJWT, (req, res) => {
     res.json({ isLoggedIn: true, username: req.user.username });
 });
 
-// app.post('/admin/register', async (req, res) => {
+// router.post('/admin/register', async (req, res) => {
 //     const user = req.body;
 
 //     const takenUsername = await User.findOne({ username: user.username });
@@ -92,7 +96,7 @@ app.post('/api/admin', verifyJWT, (req, res) => {
 //     }
 // });
 
-app.post('/admin/login', (req, res) => {
+router.post('/admin/login', (req, res) => {
     const user = req.body;
     User.findOne({ username: user.username }).then((dbUser) => {
         if (!dbUser) {
@@ -115,7 +119,7 @@ app.post('/admin/login', (req, res) => {
     });
 });
 
-app.post('/admin/excel', verifyJWT, async (req, res) => {
+router.post('/admin/excel', verifyJWT, async (req, res) => {
     let db, questions;
     switch (req.query.quest) {
         case 'QuestRS4E':
@@ -212,7 +216,7 @@ app.post('/admin/excel', verifyJWT, async (req, res) => {
     }
 });
 
-app.get('*', (req, res) => {
+router.get('*', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname + '/../index.html'));
 });
 
