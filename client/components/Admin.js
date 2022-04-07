@@ -1,8 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import $ from 'jquery';
-import '../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';
-import '../../node_modules/@fortawesome/fontawesome-free/css/solid.css';
 
 function Admin() {
     const [user, setUser] = useState(null);
@@ -23,7 +21,7 @@ function Admin() {
         const username = $('form input[name=username]').val();
         const password = $('form input[name=password]').val();
 
-        $.post('/admin/login', { username, password }).then((response) => {
+        $.post('/rs4e/admin/login', { username, password }).then((response) => {
             if (response.message === 'success') {
                 setUser({ id: '0', name: username });
                 sessionStorage.setItem('token', response.token);
@@ -42,7 +40,7 @@ function Admin() {
 
     if (sessionStorage.getItem('token') && !user) {
         setTokenRequest(sessionStorage.getItem('token'));
-        $.post('/api/admin').then((response) => {
+        $.post('/rs4e/api/admin').then((response) => {
             if (response.isLoggedIn) {
                 setUser({ id: '0', name: reportError.username });
             }
@@ -50,13 +48,12 @@ function Admin() {
     }
 
     function downloadFile(postPath) {
-        $.post('/admin/excel?quest=' + postPath).then((response) => {
+        $.post('/rs4e/admin/excel?quest=' + postPath).then((response) => {
             if (response.status === 'success') {
-                $('#my_iframe').src = '/dist/files/ficheiro.xlsx';
 
                 const link = document.createElement('a');
                 link.download = 'ficheiro.xlsx';
-                link.href = '/dist/files/ficheiro.xlsx';
+                link.href = '/rs4e/dist/files/ficheiro.xlsx';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);

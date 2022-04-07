@@ -13,6 +13,8 @@ const surveyJSON = {
         'Agradecemos a sua disponibilidade, estando convencidos que a sua opinião é fundamental. ',
         'Se você tiver alguma dúvida sobre o questionário, envie-nos um email para: carmenf@staff.uma.pt.',
     ],
+    img: 'uma',
+    name:'questumaemp',
     elements: [
         {
             name: 'Idade',

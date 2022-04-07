@@ -1,7 +1,6 @@
 import express from 'express';
 import devBundle from './devBundle';
 import path from 'path';
-// import template from './../template';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
@@ -36,27 +35,31 @@ const User = mongoose.model('User', {
 devBundle.compile(router);
 
 const CURRENT_WORKING_DIR = process.cwd();
-router.use('/rs4e/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
+app.use('/rs4e/dist', express.static(path.join(CURRENT_WORKING_DIR, 'dist')));
 
 router.post('/api/save', (req, res) => {
+    let entry;
     switch (req.query.quest.toLocaleLowerCase()) {
         case 'questrs4e':
-            const entry1 = new Rs4e({ date: new Date(), data: JSON.parse(req.body.answers) });
-            entry1.save();
+            entry = new Rs4e({ date: new Date(), data: JSON.parse(req.body.answers) });
             break;
         case 'questuma':
-            const entry2 = new UMa({ date: new Date(), data: JSON.parse(req.body.answers) });
-            entry2.save();
+            entry = new UMa({ date: new Date(), data: JSON.parse(req.body.answers) });
             break;
         case 'questrs4eemp':
-            const entry3 = new Rs4e_emp({ date: new Date(), data: JSON.parse(req.body.answers) });
-            entry3.save();
+            entry = new Rs4e_emp({ date: new Date(), data: JSON.parse(req.body.answers) });
             break;
         case 'questumaemp':
-            const entry4 = new UMaEmp({ date: new Date(), data: JSON.parse(req.body.answers) });
-            entry4.save();
+            entry = new UMaEmp({ date: new Date(), data: JSON.parse(req.body.answers) });
             break;
+        default:
+            return res.status(422).send('Sem pedido');
     }
+
+    entry.save().then((doc, err) => {
+        if (!err) return res.status(200).send('Saved');
+        return res.status(422).send(err);
+    });
 });
 
 function verifyJWT(req, res, next) {
@@ -141,7 +144,7 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
     }
 
     const workbook = new excelJS.Workbook(); // Create a new workbook
-    const worksheet = workbook.addWorksheet('My Users'); // New Worksheet
+    const worksheet = workbook.addWorksheet('Respostas'); // New Worksheet
     const path = __dirname + '/files'; // Path to download excel  // Column for data in excel. key must match data key
 
     let colunas = [{ header: 'Data', key: 'date', width: 20 }];
@@ -201,7 +204,7 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
 
         worksheet.addRow(temp); // Add data in worksheet
         counter++;
-    }); // Making first line in excel bold
+    });
 
     worksheet.getRow(1).eachCell((cell) => {
         cell.font = { bold: true };
@@ -216,7 +219,7 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
     }
 });
 
-router.get('*', (req, res) => {
+app.get('*', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname + '/../index.html'));
 });
 

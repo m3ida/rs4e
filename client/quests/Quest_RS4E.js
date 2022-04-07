@@ -13,6 +13,7 @@ const surveyJSON = {
         'Agradecemos a sua disponibilidade, estando convencidos que a sua opinião é fundamental. ',
         'Se você tiver alguma dúvida sobre o questionário, envie-nos um email para: carmenf@staff.uma.pt.',
     ],
+    name:'questrs4e',
     elements: [
         {
             name: 'Em que ano participou no Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E?',

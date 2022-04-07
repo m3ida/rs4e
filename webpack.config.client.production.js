@@ -9,6 +9,7 @@ const config = {
         filename: 'bundle.js',
         publicPath: '/dist/',
     },
+    plugins: [],
     module: {
         rules: [
             {
@@ -18,11 +19,17 @@ const config = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ],
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
-                use: 'file-loader',
+                test: /\.(png|jpe?g|gif|ttf|woff2)$/i,
+                loader: 'file-loader',
+                options: {
+                    publicPath: '/rs4e/dist',
+                },
             },
         ],
     },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Question from './Question';
-import logo from '../img/rs4eLogo.png';
+import logors4e from '../img/rs4eLogo.png';
+import logoUma from '../img/umaLogo.png';
 import { LinearProgress } from '@mui/material';
 import Buttons from './Buttons';
 import $ from 'jquery';
@@ -28,9 +29,7 @@ function Panel(props) {
     };
 
     const handleFinish = () => {
-        const quest = window.location.pathname.replace('/', '');
-
-        $.post('/api/save?quest=' + quest, { answers: JSON.stringify(answers) });
+        $.post('/rs4e/api/save?quest=' + questions.name, { answers: JSON.stringify(answers) });
     };
 
     const handleCleanUp = (aObject) => {
@@ -97,7 +96,7 @@ function Panel(props) {
                         <></>
                     )}
 
-                    <img className='logo' src={logo} alt='Logo' loading='eager' />
+                    <img className='logo' src={questions.img === 'uma' ? logoUma : logors4e} alt='Logo' loading='eager' />
                 </div>
                 <div className='content-container animate__animated animate__faster'>
                     {msgErro}
