@@ -97,6 +97,13 @@ const surveyJSON = {
             choices: ['Secundário', 'Licenciatura', 'Mestrado', 'Doutoramento', 'Pós-doutoramento', 'Outra'],
         },
         {
+            name: 'Obteve a sua formação superior na Universidade da Madeira?',
+            type: 'radiogroup',
+            description: 'Escolha uma e uma só das seguintes opções:',
+            isRequired: true,
+            choices: ['Sim', 'Não'],
+        },
+        {
             name: 'Qual o domínio científico/tecnológico da sua formação?',
             type: 'radiogroup',
             description: 'Escolha uma e uma só das seguintes opções:',
@@ -112,7 +119,7 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'Avalie a importância das seguintes razões para a escolha domínio desse científico/tecnológico para a sua formação:',
+            name: 'Avalie a importância das seguintes razões para a escolha desse domínio científico/tecnológico para a sua formação:',
             type: 'matrix',
             description: 'Avalie de 1 (nenhuma importância) a 7 (muito importante)',
             isRequired: true,
@@ -129,7 +136,7 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'Em que ano concluiu o seu curso (útlimo grau obtido)?',
+            name: 'Em que ano concluiu o seu curso (último grau obtido)?',
             type: 'radiogroup',
             description: 'Escolha uma e uma só das seguintes opções:',
             isRequired: true,
@@ -218,7 +225,7 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'De uma forma geral (em grosso modo/ por alto), qual é o rendimento líquido total mensal do seu agregado familiar? (somando os rendimentos de qualquer pessoa que viva no seu agregado familiar)',
+            name: 'De uma forma geral (em grosso modo/por alto), qual é o rendimento líquido total mensal do seu agregado familiar? (somando o rendimento de todas as pessoas que vivem no seu agregado familiar)',
             type: 'radiogroup',
             description: 'Escolha uma e uma só das seguintes opções:',
             isRequired: true,
@@ -268,7 +275,7 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na Região Autónoma da Madeira (RAM)',
+            name: 'Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na RAM',
             description: 'Avalie de 1 (desconhece completamente) a 7 (conhecimento total)',
             type: 'matrix',
             isRequired: true,
@@ -285,9 +292,6 @@ const surveyJSON = {
                 },
                 {
                     value: 'Associação do Comércio e Indústria do Funchal (ACIF)',
-                },
-                {
-                    value: 'Direção Regional da Inovação, Valorização e Empreendedorismo (DRIVE)',
                 },
                 {
                     value: 'Instituto de Emprego da Madeira, IP-RAM',

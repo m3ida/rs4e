@@ -11,10 +11,11 @@ function Panel(props) {
 
     const prevQuestionIndexRef = useRef();
 
-    const [questionIndex, setQuestionIndex] = useState(-1);
+    const [questionIndex, setQuestionIndex] = useState(19);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
     const [disabledButton, setDisabledButton] = useState(false);
+    const [consentido, setConsentido] = useState(false);
 
     const setAnswer = (answer, other) => {
         const temp = { ...answers };
@@ -64,10 +65,11 @@ function Panel(props) {
 
             if (questionIndex < prevQuestionIndex && questionIndex === -1) {
                 setAnswers({});
+                setConsentido(false);
                 questions.elements.forEach((element) => {
-                    if (element.type == 'radiogroup' || element.type == 'text' || element.type == 'matrix') {
+                    // if (element.type == 'radiogroup' || element.type == 'text' || element.type == 'matrix') {
                         handleCleanUp(element);
-                    }
+                    // }
                 });
             }
         }
@@ -104,6 +106,8 @@ function Panel(props) {
                         setDisabledButton={setDisabledButton}
                         questionIndex={questionIndex}
                         questionsFileName={props.questionsFileName}
+                        consentido={consentido}
+                        setConsentido={setConsentido}
                     ></Question>
                 </div>
                 {/* <div className='buttons-container'> */}
@@ -115,6 +119,7 @@ function Panel(props) {
                     questionIndex={questionIndex}
                     setAnswer={setAnswer}
                     questionsFileName={props.questionsFileName}
+                    consentido={consentido}
                 />
                 {/* </div> */}
             </div>

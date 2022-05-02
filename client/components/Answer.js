@@ -4,6 +4,7 @@ import Rating from './Answers/Rating';
 import Matrix from './Answers/Matrix';
 import Radiogroup from './Answers/Radiogroup';
 import Simqual from './Answers/Simqual';
+import ConhecerEmpreendedor from './Answers/ConhecerEmpreendedor';
 
 function Answer(props) {
     const questions = require('../quests/' + props.questionsFileName);
@@ -30,6 +31,8 @@ function Answer(props) {
             return <Email setAnswered={setAnswered} questionIndex={props.questionIndex} questionsFileName={props.questionsFileName} />;
         case 'sim_qual':
             return <Simqual setAnswered={setAnswered} questionIndex={props.questionIndex} questionsFileName={props.questionsFileName} />;
+        case 'conhecer-empreendedor':
+            return <ConhecerEmpreendedor setAnswered={setAnswered} questionIndex={props.questionIndex} questionsFileName={props.questionsFileName} />
         default:
             return <></>;
     }

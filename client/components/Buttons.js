@@ -43,7 +43,14 @@ function Buttons(props) {
 
     if (props.questionIndex === -1) {
         return (
-            <div className='button begin-button special' onClick={(e) => changeQuestion(e, true)}>
+            <div
+                className={props.consentido ? 'button begin-button special' : 'button begin-button special disabled'}
+                onClick={(e) => {
+                    if (props.consentido) {
+                        changeQuestion(e, true);
+                    }
+                }}
+            >
                 <p>COMEÇAR</p>
             </div>
         );

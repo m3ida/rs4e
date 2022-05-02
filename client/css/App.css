@@ -306,6 +306,11 @@ input[type=radio] {
     margin-right: 10px;
   }
 
+  input[type=checkbox] {
+    height: 35px;
+    width: 35px;
+  }
+
   .MuiSlider-colorPrimary.MuiSlider-sizeMedium {
     height: 20px;
   }

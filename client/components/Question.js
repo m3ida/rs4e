@@ -4,6 +4,13 @@ import React from 'react';
 function Question(props) {
     const questions = require('../quests/' + props.questionsFileName);
 
+    const consentimentoTxt = [
+        'Para poder participar neste estudo, solicitamos o preenchimento da declaração de consentimento:',
+        '“Declaro que aceito os termos e condições do presente questionário e que me foram dados os esclarecimentos ' +
+            'necessários e as informações suficientes para a participação voluntária neste estudo. Declaro que sei que posso ' +
+            'desistir a qualquer momento de participar neste estudo sem qualquer prejuízo"',
+    ];
+
     if (props.questionIndex < questions.elements.length) {
         const question = questions.elements[props.questionIndex];
 
@@ -32,7 +39,43 @@ function Question(props) {
                 <>
                     <h4>Participantes do curso intensivo de empreendedorismo do RS4E</h4>
                     <p style={{ fontWeight: 'bold' }}>Formulário relativo à participação no projeto RS4E</p>
-                    <div className='description'>{descriptionHTML}</div>
+                    <div className='description'>
+                        {descriptionHTML}
+
+                        <br />
+                        <p>{consentimentoTxt[0]}</p>
+                        <p>{consentimentoTxt[1]}</p>
+
+                        <p>
+                            <label>
+                                <input
+                                    defaultChecked={true}
+                                    type='radio'
+                                    name={'consentimento'}
+                                    value={'Não'}
+                                    onClick={() => {
+                                        props.setConsentido(false);
+                                    }}
+                                />
+                                Não
+                            </label>
+                        </p>
+
+                        <p>
+                            <label>
+                                <input
+                                    defaultChecked={false}
+                                    type='radio'
+                                    name={'consentimento'}
+                                    value={'Sim'}
+                                    onClick={() => {
+                                        props.setConsentido(true);
+                                    }}
+                                />
+                                Sim
+                            </label>
+                        </p>
+                    </div>
                 </>
             );
         }
