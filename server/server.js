@@ -82,22 +82,22 @@ router.post('/api/admin', verifyJWT, (req, res) => {
     res.json({ isLoggedIn: true, username: req.user.username });
 });
 
-// router.post('/admin/register', async (req, res) => {
-//     const user = req.body;
+/*router.post('/admin/register', async (req, res) => {
+    const user = req.body;
 
-//     const takenUsername = await User.findOne({ username: user.username });
+    const takenUsername = await User.findOne({ username: user.username });
 
-//     if (takenUsername) {
-//         res.json({ message: 'Username taken' });
-//     } else {
-//         user.password = await bcrypt.hash(user.password, 10);
+    if (takenUsername) {
+        res.json({ message: 'Username taken' });
+    } else {
+        user.password = await bcrypt.hash(user.password, 10);
 
-//         const dbUser = new User({ username: user.username, password: user.password });
+        const dbUser = new User({ username: user.username, password: user.password });
 
-//         dbUser.save();
-//         res.json({ message: 'success' });
-//     }
-// });
+        dbUser.save();
+        res.json({ message: 'success' });
+    }
+});*/
 
 router.post('/admin/login', (req, res) => {
     const user = req.body;
@@ -154,6 +154,19 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
             question.elements.forEach((subquestion) => {
                 colunas.push({ header: question.name + '.' + subquestion.value, key: question.name + '.' + subquestion.value, width: 10 });
             });
+        } else if (question.type === 'conhecer-empreendedor') {
+            question.choices.forEach((subquestion) => {
+                colunas.push({
+                    header: question.name + '.' + subquestion + '.Em que medida você conhece a atividade dele(a) como empreendedor(a)?',
+                    key: question.name + '.' + subquestion + '.Em que medida você conhece a atividade dele(a) como empreendedor(a)?',
+                    width: 10,
+                });
+                colunas.push({
+                    header: question.name + '.' + subquestion + '.Em que medida ele/ela pode ser considerado(a) um bom empreendedor(a)?',
+                    key: question.name + '.' + subquestion + '.Em que medida ele/ela pode ser considerado(a) um bom empreendedor(a)?',
+                    width: 10,
+                });
+            });
         } else {
             colunas.push({ header: question.name, key: question.name, width: 10 });
         }
@@ -167,9 +180,6 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
 
     const entries = await db.find();
 
-    // Looping through User data
-    let counter = 1;
-
     //Em cada entry na BD
     entries.forEach((entry) => {
         //temp = perguntas : respostas
@@ -177,33 +187,27 @@ router.post('/admin/excel', verifyJWT, async (req, res) => {
 
         //Percorrer as perguntas para ver quais tem respostas como objetos (Precisam de ser tratados)
         Object.keys(temp).forEach((question) => {
+            //Se a resposta a esta pergunta for um objeto, entao coloca question.subquestion = resposta
+            //No caso do tipo "conhecer-empreendedor", tem um Objeto dentro de um Objecto na resposta
             if (typeof temp[question] === 'object') {
                 Object.keys(temp[question]).forEach(function (subquestion) {
-                    temp[question + '.' + subquestion] = temp[question][subquestion];
+                    if(typeof temp[question][subquestion] === 'object') { //Caso do tipo conhecer-empreendedor
+                        Object.keys(temp[question][subquestion]).forEach(function (relacao) {
+                            temp[question + '.' + subquestion + '.' + relacao] = temp[question][subquestion][relacao];
+                        });
+                    } else {
+                        temp[question + '.' + subquestion] = temp[question][subquestion];
+                    }
+                    
                 });
                 delete temp[question];
             }
         });
+
+        //colocar a data
         temp['date'] = entry.date;
 
-        // const temp = {};
-
-        // Object.keys(questions).forEach((question) => {
-        //     if (typeof temp[question] === 'object') {
-        //         Object.keys(temp[question]).forEach(function (subquestion) {
-        //             temp[question + '.' + subquestion] = entry.data[question][subquestion];
-        //         });
-        //         delete temp[question];
-        //     } else {
-        //         temp[question] = entry.data[question];
-        //     }
-        // });
-        // temp['date'] = entry.date;
-
-        //Percorrer questions e num novo objeto colocar cada resposta. Como está acima
-
         worksheet.addRow(temp); // Add data in worksheet
-        counter++;
     });
 
     worksheet.getRow(1).eachCell((cell) => {

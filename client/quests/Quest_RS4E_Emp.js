@@ -59,6 +59,30 @@ const surveyJSON = {
             ],
         },
         {
+            name: 'Teste - empreendedor',
+            type: 'radiogroup',
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            description: 'Escolha uma e uma só das seguintes opções:',
+            isRequired: true,
+            choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
+        },
+        {
+            name: 'Teste - não empreendedor',
+            type: 'radiogroup',
+            depends: {
+                question: 'Situação laboral',
+                equals: false,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            description: 'Escolha uma e uma só das seguintes opções:',
+            isRequired: true,
+            choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
+        },
+        {
             name: 'Há quantos anos criou a empresa?',
             type: 'radiogroup',
             description: 'Escolha uma e uma só das seguintes opções:',

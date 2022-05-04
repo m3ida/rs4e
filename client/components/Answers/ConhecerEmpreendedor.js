@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Slider, Checkbox } from '@mui/material';
 import $ from 'jquery';
 
 function ConhecerEmpreendedor(props) {
     const questions = require('../../quests/' + props.questionsFileName);
     const [relacionamentoInactive, _setRelacionamentoInactive] = useState([true, true, true, true]);
+
+    useEffect(() => {
+        verifyAnswered();
+    }, [relacionamentoInactive]);
 
     const setRelacionamentoInactive = (index, state) => {
         const aux = { ...relacionamentoInactive };
@@ -51,8 +55,30 @@ function ConhecerEmpreendedor(props) {
         'Em que medida ele/ela pode ser considerado(a) um bom empreendedor(a)?',
     ];
 
+    const verifyAnswered = () => {
+        var questao = questions.elements[props.questionIndex];
+
+        const numCheckboxActive = Object.values(relacionamentoInactive).filter((el) => {
+            return el === false;
+        }).length; //-> Numero de checkboxes ativas
+
+        const numSlidersObrigatorios = 2 * numCheckboxActive;
+        //-> número de sliders que tem de ser respondidos
+
+        let numSlidersRespondidos = 0;
+        for (const relation in questao.value) {
+            numSlidersRespondidos += Object.keys(questao.value[relation]).length;
+        }
+
+        let answered = numSlidersRespondidos === numSlidersObrigatorios;
+
+        if (numSlidersObrigatorios === 0) answered = false;
+
+        props.setAnswered(answered);
+    };
+
     const relacionamentosHTML = relacionamentos.map((relacionamento, index) => {
-        const questRelacionamentosHTML = questRelacionamentos.map((questRelacionamento, indexSlider) => {
+        const questRelacionamentosHTML = questRelacionamentos.map((questRelacionamento) => {
             return (
                 <div
                     key={index + '.slider.' + questRelacionamento}
@@ -65,7 +91,7 @@ function ConhecerEmpreendedor(props) {
                                     : false
                                 : false) && relacionamentoInactive[index]
                                 ? 'none'
-                                : undefined,
+                                : null,
                     }}
                 >
                     <p>{questRelacionamento}</p>
@@ -90,15 +116,7 @@ function ConhecerEmpreendedor(props) {
                             questao.value[relacionamento][questRelacionamento] = val;
 
                             //Verificar se está answered
-                            $('input[name=relacionamento]:checked').length; //-> Numero de checkboxes ativas
-
-                            const numSlidersObrigatorios = $('input[type=range]:enabled').length; //-> número de sliders que tem de ser respondidos
-
-                            for (const relation in questao.value) {
-                                const numSlidersRespondidos = Object.keys(questao.value[relation]).length;
-
-                                console.log(numSlidersRespondidos === numSlidersObrigatorios);
-                            }
+                            verifyAnswered();
                         }}
                         sx={{
                             mt: -3,
@@ -131,11 +149,10 @@ function ConhecerEmpreendedor(props) {
                             if (!val && questions.elements[props.questionIndex].value) {
                                 //Delete answer from sliders that belong to checkbox
                                 delete questions.elements[props.questionIndex].value[relacionamento];
-                                $(e.target).parents('div.relacionamento-container');
 
-                                $(e.target).parents('div.relacionamento-container').find(".MuiSlider-track").css("width", '0%');
-                                $(e.target).parents('div.relacionamento-container').find(".MuiSlider-thumb").css("left", "0%");
-                            } 
+                                $(e.target).parents('div.relacionamento-container').find('.MuiSlider-track').css('width', '0%');
+                                $(e.target).parents('div.relacionamento-container').find('.MuiSlider-thumb').css('left', '0%');
+                            }
                         }}
                     />
                     {relacionamento}

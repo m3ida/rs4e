@@ -11,10 +11,12 @@ function Panel(props) {
 
     const prevQuestionIndexRef = useRef();
 
-    const [questionIndex, setQuestionIndex] = useState(19);
+    const [questionIndex, setQuestionIndex] = useState(4);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
-    const [disabledButton, setDisabledButton] = useState(false);
+    const [disabledButton, setDisabledButton] = useState(
+        questionIndex < questions.elements.length ? questions.elements[questionIndex].answered : true
+    );
     const [consentido, setConsentido] = useState(false);
 
     const setAnswer = (answer, other) => {
@@ -39,16 +41,25 @@ function Panel(props) {
     };
 
     useEffect(() => {
+        console.log(JSON.stringify(answers));
         if (questionIndex >= questions.elements.length) {
             handleFinish();
         } else {
             if (questionIndex > -1 && questions.elements[questionIndex].depends) {
                 const dependency = questions.elements[questionIndex].depends;
 
-                if (
-                    (answers[dependency.question] !== dependency.value && dependency.value) ||
-                    (!dependency.value && answers[dependency.question] === 'Não')
-                ) {
+                let skipQuestion = false;
+
+                //é para ser diferente
+                if (dependency.equals === false) {
+                    //Se for igual entao passa a frente
+                    skipQuestion = answers[dependency.question] === dependency.value;
+                } else {
+                    skipQuestion = answers[dependency.question] !== dependency.value;
+                }
+
+                //Falta aqui
+                if (skipQuestion) {
                     handleCleanUp(questions.elements[questionIndex]);
 
                     delete answers[questions.elements[questionIndex].name];
@@ -68,7 +79,7 @@ function Panel(props) {
                 setConsentido(false);
                 questions.elements.forEach((element) => {
                     // if (element.type == 'radiogroup' || element.type == 'text' || element.type == 'matrix') {
-                        handleCleanUp(element);
+                    handleCleanUp(element);
                     // }
                 });
             }
