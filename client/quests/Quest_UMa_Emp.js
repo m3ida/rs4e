@@ -2,8 +2,7 @@ const surveyJSON = {
     description: [
         'Uma equipa de docentes da Universidade da Madeira (UMa), coordenada pela Professora Doutora Carmen Freitas, ' +
             'pretende realizar um trabalho de investigação com o objetivo de avaliar a intenção empreendedora dos alunos ' +
-            'graduados pela Universidade da Madeira (UMa) que participaram no Curso Intensivo em Empreendedorismo e ' +
-            'Inovação Empresarial RS4E. ',
+            'graduados pela UMa. ',
         'Para tal, solicitamos a sua participação neste estudo, através do preenchimento deste questionário, onde terá de ' +
             'dar a sua opinião sobre a atividade empreendedora, que corresponde à atividade desenvolvida por um empreendedor ' +
             'aquando da criação da sua empresa. As perguntas marcadas com asterisco (*) são obrigatórias.',
@@ -52,6 +51,30 @@ const surveyJSON = {
                 'Outra',
             ],
         },
+        // {
+        //     name: 'Teste - empreendedor',
+        //     type: 'radiogroup',
+        //     depends: {
+        //         question: 'Situação laboral',
+        //         equals: true,
+        //         value: 'Empreendedor/Dono de empresa',
+        //     },
+        //     description: 'Escolha uma e uma só das seguintes opções:',
+        //     isRequired: true,
+        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
+        // },
+        // {
+        //     name: 'Teste - não empreendedor',
+        //     type: 'radiogroup',
+        //     depends: {
+        //         question: 'Situação laboral',
+        //         equals: false,
+        //         value: 'Empreendedor/Dono de empresa',
+        //     },
+        //     description: 'Escolha uma e uma só das seguintes opções:',
+        //     isRequired: true,
+        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
+        // },
         {
             name: 'Há quantos anos criou a empresa?',
             type: 'radiogroup',
@@ -87,7 +110,7 @@ const surveyJSON = {
             type: 'radiogroup',
             description: 'Escolha uma e uma só das seguintes opções:',
             isRequired: true,
-            choices: ['menos de 1 ano', '1 a 2 anos', '3 a 5 anos', '5 a 10 anos', 'mais de 10 anos'],
+            choices: ['Menos de 1 ano', '1 a 2 anos', '3 a 5 anos', '5 a 10 anos', 'mais de 10 anos'],
         },
         {
             name: 'Habilitação',
@@ -247,32 +270,15 @@ const surveyJSON = {
             choices: ['Sim', 'Não'],
         },
         {
-            name: 'Indique qual a relação que tem com esse empreendor(a)',
-            type: 'radiogroup',
-            description: 'Escolha uma e uma só das seguintes opções:',
+            name: 'Qual a relação que tem com esse empreendor(a)?',
+            type: 'conhecer-empreendedor',
+            description: 'Avalie as seguintes questões de 1 (em nenhuma medida) a 7 (completamente).',
             depends: {
                 question: 'Conhece pessoalmente algum empreendedor?',
                 value: 'Sim',
             },
             isRequired: true,
             choices: ['Família', 'Amigos', 'Patrão', 'Outro'],
-        },
-        {
-            name: 'Avalie as seguintes questões de 1 (em nenhuma medida) a 7 (completamente)',
-            type: 'matrix',
-            depends: {
-                question: 'Conhece pessoalmente algum empreendedor?',
-                value: 'Sim',
-            },
-            isRequired: true,
-            elements: [
-                {
-                    value: 'Em que medida você conhece a atividade dele(a) como empreendedor(a)?',
-                },
-                {
-                    value: 'Em que medida ele/ela pode ser considerado(a) um bom empreendedor(a)?',
-                },
-            ],
         },
         {
             name: 'Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na RAM',
@@ -302,14 +308,6 @@ const surveyJSON = {
                 },
             ],
         },
-        // {
-        //     name: 'Qual o nome da associação empresarial que conhece?',
-        //     type: 'value',
-        //     visibleIf:
-        //         "{Indique o seu nível de conhecimento sobre as associações empresariais e institutos de apoio à atividade empreendedora na Região Autónoma da Madeira (RAM)} = 'Outra'",
-        //     placeHolder: 'Escreva aqui',
-        //     isRequired: true,
-        // },
         {
             name: 'Para cada uma das seguintes medidas de apoio à criação de empresas na RAM, indique o seu nível de conhecimento',
             type: 'matrix',
@@ -341,14 +339,6 @@ const surveyJSON = {
                 },
             ],
         },
-        // {
-        //     name: 'Qual a medida de apoio à criação de empresas na RAM que conhece?',
-        //     type: 'value',
-        //     visibleIf:
-        //         "{Para cada uma das seguintes medidas de apoio à criação de empresas na RAM, indique o seu nível de conhecimento} = 'Outra'",
-        //     placeHolder: 'Escreva aqui',
-        //     isRequired: true,
-        // },
         {
             name: 'O que gostaria de fazer logo que acabe(ou) o seu curso?',
             description: 'Avalie as seguintes de 1 (preferência mínima) a 7 (preferência máxima)',
@@ -442,6 +432,33 @@ const surveyJSON = {
             description: 'Indique de 1 (desaprovação total) a 7 (aprovação total)',
             type: 'matrix',
             isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            elements: [
+                {
+                    value: 'A sua família próxima',
+                },
+                {
+                    value: 'Os seus amigos',
+                },
+                {
+                    value: 'Os seus colegas e companheiros',
+                },
+            ],
+        },
+        {
+            name: 'Se decidir criar uma empresa, as pessoas próximas de si aprovariam dessa decisão?',
+            description: 'Indique de 1 (desaprovação total) a 7 (aprovação total)',
+            type: 'matrix',
+            isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: false,
+                value: 'Empreendedor/Dono de empresa',
+            },
             elements: [
                 {
                     value: 'A sua família próxima',
@@ -483,6 +500,11 @@ const surveyJSON = {
             description: 'Avalie de 1 (discordo totalmente) a 7 (concordo totalmente)',
             type: 'matrix',
             isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
             elements: [
                 {
                     value: 'Criar uma empresa e mantê-la em funcionamento é uma tarefa fácil para mim',
@@ -491,7 +513,7 @@ const surveyJSON = {
                     value: 'Estava preparado para começar a minha empresa',
                 },
                 {
-                    value: 'Consegui controlar o processo da criação de uma empresa',
+                    value: 'Consegui controlar o processo de criação de uma empresa',
                 },
                 {
                     value: 'Conhecia os detalhes práticos necessários para começar uma empresa',
@@ -501,6 +523,37 @@ const surveyJSON = {
                 },
                 {
                     value: 'Estou a ter sucesso com a minha empresa',
+                },
+            ],
+        },
+        {
+            name: 'Em que medida concorda com as seguintes afirmações sobre a sua capacidade empreendedora?',
+            description: 'Avalie de 1 (discordo totalmente) a 7 (concordo totalmente)',
+            type: 'matrix',
+            isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: false,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            elements: [
+                {
+                    value: 'Criar uma empresa e mantê-la em funcionamento seria uma tarefa fácil para mim',
+                },
+                {
+                    value: 'Estou preparado para começar uma empresa viável',
+                },
+                {
+                    value: 'Consigo controlar o processo de criação de uma empresa',
+                },
+                {
+                    value: 'Conheço os detalhes práticos necessários para começar uma empresa',
+                },
+                {
+                    value: 'Sei como desenvolver um projeto empreendedor',
+                },
+                {
+                    value: 'Se tentasse criar uma empresa, teria uma elevada probabilidade de fazê-lo com sucesso',
                 },
             ],
         },
@@ -531,10 +584,127 @@ const surveyJSON = {
             ],
         },
         {
+            name: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
+            description: 'Escolha uma opção:',
+            type: 'radiogroup',
+            isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: false,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            choices: ['Sim', 'Não'],
+        },
+        //-----------------------------------------------------------Se nao empreendedor
+        {
+            name: 'Se criar uma empresa, qual a dimensão, em número de empregados, que gostaria de atingir?',
+            description: 'Escolha uma opção:',
+            type: 'radiogroup',
+            isRequired: true,
+            depends: {
+                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
+                value: 'Sim',
+            },
+            choices: [
+                'Trabalhador por conta própria (nenhum empregado)',
+                'Microempresa  (até 9 empregados)',
+                'Pequena empresa (de 10 a 49 empregados)',
+                'Média empresa (de 50 a 249 empregados)',
+                'Grande empresa ( mais de 249 empregados)',
+            ],
+        },
+        {
+            name: 'Em que medida considera os seguintes resultados como reflexo de sucesso na atividade empreendedora?',
+            description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
+            type: 'matrix',
+            isRequired: true,
+            depends: {
+                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
+                value: 'Sim',
+            },
+            elements: [
+                {
+                    value: 'Ser competitivo em mercados internacionais',
+                },
+                {
+                    value: 'Alcançar níveis altos de rendimentos',
+                },
+                {
+                    value: 'Desenvolver o tipo de atividade que realmente gosta/aprecia',
+                },
+                {
+                    value: 'Alcançar grande reconhecimento na sociedade',
+                },
+                {
+                    value: 'Ajudar a resolver problemas na minha comunidade',
+                },
+                {
+                    value: 'Manter o negócio/empresa a funcionar',
+                },
+                {
+                    value: 'Manter a empresa numa trajetória de crescimento',
+                },
+            ],
+        },
+        {
+            name: 'O quanto importante será para si o contínuo desenvolvimento da empresa?',
+            description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
+            type: 'rating',
+            depends: {
+                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
+                value: 'Sim',
+            },
+            minRateDescription: 'Em nenhuma medida',
+            maxRateDescription: 'Completamente',
+            isRequired: true,
+        },
+        {
+            name: 'Em que medida realizaria os seguintes comportamentos/ações para poder desenvolver a sua empresa?',
+            description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
+            type: 'matrix',
+            isRequired: true,
+            depends: {
+                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
+                value: 'Sim',
+            },
+            elements: [
+                {
+                    value: 'Exportar uma parte significativa da produção',
+                },
+                {
+                    value: 'Apresentar, com regularidade, novos produtos e/ou serviços aos seus clientes',
+                },
+                {
+                    value: 'Introduzir, com regularidade, novos processos ou sistemas de produção',
+                },
+                {
+                    value: 'Desenvolver projectos de Pesquisa & Desenvolvimento',
+                },
+                {
+                    value: 'Planear detalhadamente as diferentes áreas de atuação da empresa',
+                },
+                {
+                    value: 'Estabelecer acordos de cooperação e parcerias com outras empresas',
+                },
+                {
+                    value: 'Oferecer formação especializada aos funcionários',
+                },
+                {
+                    value: 'Aumentar a dimensao da empresa (funcionários, instalações, …)',
+                },
+            ],
+        },
+        //-----------------------------------------------------------Se empreendedor:
+        {
             name: 'Qual a dimensão, em número de empregados, que gostaria de atingir com a sua empresa?',
             description: 'Escolha uma opção:',
             type: 'radiogroup',
             isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
             choices: [
                 'Trabalhador por conta própria (nenhum empregado)',
                 'Microempresa  (até 9 empregados)',
@@ -548,6 +718,11 @@ const surveyJSON = {
             description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
             type: 'matrix',
             isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
             elements: [
                 {
                     value: 'Ser competitivo em mercados internacionais',
@@ -577,8 +752,9 @@ const surveyJSON = {
             description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
             type: 'rating',
             depends: {
-                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
-                value: 'Sim',
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
             },
             minRateDescription: 'Em nenhuma medida',
             maxRateDescription: 'Completamente',
@@ -588,11 +764,12 @@ const surveyJSON = {
             name: 'Em que medida realizaria os seguintes comportamentos/ações para fazer crescer a sua empresa?',
             description: 'Assinale de 1 (em nenhuma medida) a 7 (completamente)',
             type: 'matrix',
-            depends: {
-                question: 'Já pensou seriamente em se tornar empreendedor e criar uma empresa?',
-                value: 'Sim',
-            },
             isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: true,
+                value: 'Empreendedor/Dono de empresa',
+            },
             elements: [
                 {
                     value: 'Exportar uma parte significativa da produção',
@@ -617,6 +794,38 @@ const surveyJSON = {
                 },
                 {
                     value: 'Aumentar a dimensao da empresa (funcionários, instalações, etc, …)',
+                },
+            ],
+        },
+        //-------------------------------------------------------
+        {
+            name: 'Indique o seu nível de concordância com as seguintes afirmações:',
+            description: 'Utilizando de 1 (discordo totalmente) a 7 (concordo completamente)',
+            type: 'matrix',
+            isRequired: true,
+            depends: {
+                question: 'Situação laboral',
+                equals: false,
+                value: 'Empreendedor/Dono de empresa',
+            },
+            elements: [
+                {
+                    value: 'Estou pronto para fazer qualquer coisa para me tornar empreendedor',
+                },
+                {
+                    value: 'O meu objetivo profissional é tornar-me um empreendedor',
+                },
+                {
+                    value: 'Vou fazer todo o esforço para criar e gerir a minha própria empresa',
+                },
+                {
+                    value: 'Estou determinado em criar uma empresa no futuro',
+                },
+                {
+                    value: 'Já pensei seriamente em criar uma empresa',
+                },
+                {
+                    value: 'Tenho a firme intenção de criar uma empresa algum dia',
                 },
             ],
         },
@@ -657,6 +866,8 @@ const surveyJSON = {
             description: 'Escolha uma e uma só das seguintes opções:',
             depends: {
                 question: 'Participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
+                equals: false,
+                value: 'Não'
             },
             isRequired: true,
             elements: [

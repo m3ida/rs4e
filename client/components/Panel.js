@@ -11,11 +11,11 @@ function Panel(props) {
 
     const prevQuestionIndexRef = useRef();
 
-    const [questionIndex, setQuestionIndex] = useState(4);
+    const [questionIndex, setQuestionIndex] = useState(-1);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
     const [disabledButton, setDisabledButton] = useState(
-        questionIndex < questions.elements.length ? questions.elements[questionIndex].answered : true
+        questionIndex < questions.elements.length && questionIndex > -1 ? questions.elements[questionIndex].answered : true
     );
     const [consentido, setConsentido] = useState(false);
 
@@ -41,24 +41,28 @@ function Panel(props) {
     };
 
     useEffect(() => {
-        console.log(JSON.stringify(answers));
         if (questionIndex >= questions.elements.length) {
             handleFinish();
         } else {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             if (questionIndex > -1 && questions.elements[questionIndex].depends) {
                 const dependency = questions.elements[questionIndex].depends;
 
                 let skipQuestion = false;
 
+                console.log(answers[dependency.question], dependency.value);
+
                 //é para ser diferente
                 if (dependency.equals === false) {
+                    console.log("here")
                     //Se for igual entao passa a frente
                     skipQuestion = answers[dependency.question] === dependency.value;
                 } else {
                     skipQuestion = answers[dependency.question] !== dependency.value;
                 }
 
-                //Falta aqui
+                console.log(skipQuestion);
+
                 if (skipQuestion) {
                     handleCleanUp(questions.elements[questionIndex]);
 
@@ -66,13 +70,16 @@ function Panel(props) {
 
                     if (questionIndex < prevQuestionIndex) {
                         setQuestionIndex(questionIndex - 1);
-                        setDisabledButton(true);
                     } else {
                         setQuestionIndex(questionIndex + 1);
-                        setDisabledButton(false);
                     }
                 }
             }
+
+            if(questionIndex > -1 && questionIndex < questions.elements.length) {
+                setDisabledButton(questions.elements[questionIndex].answered ? true : false);
+            }
+
 
             if (questionIndex < prevQuestionIndex && questionIndex === -1) {
                 setAnswers({});
