@@ -86,21 +86,21 @@ function Admin() {
                 </button>
                 <div className='download-container'>
                     {error ? <p className='errorMessage'>{error}</p> : ''}
-                    <button onClick={() => downloadFile('QuestRS4E')}>
+                    {/* <button onClick={() => downloadFile('QuestRS4E')}>
                         <i className='fas fa-download'></i>&nbsp;
                         Download RS4E
                     </button>
                     <button onClick={() => downloadFile('QuestUMa')}>
                         <i className='fas fa-download'></i>&nbsp;
                         Download QuestUMA
-                    </button>
+                    </button> */}
                     <button onClick={() => downloadFile('QuestRS4EEmp')}>
                         <i className='fas fa-download'></i>&nbsp;
-                        Download QuestRS4EEmp
+                        Download QuestRS4E
                     </button>
                     <button onClick={() => downloadFile('QuestUMaEmp')}>
                         <i className='fas fa-download'></i>&nbsp;
-                        Download QuestUMAEmp
+                        Download QuestUMA
                     </button>
                 </div>
             </>
