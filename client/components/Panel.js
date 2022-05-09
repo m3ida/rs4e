@@ -11,7 +11,7 @@ function Panel(props) {
 
     const prevQuestionIndexRef = useRef();
 
-    const [questionIndex, setQuestionIndex] = useState(19);
+    const [questionIndex, setQuestionIndex] = useState(-1);
     const [msgErro, setMsgErro] = useState();
     const [answers, setAnswers] = useState();
     const [disabledButton, setDisabledButton] = useState(
