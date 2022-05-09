@@ -329,4 +329,13 @@ input[type=radio] {
     font-size: 30px;
   }
 
+  .MuiCheckbox-root .MuiSvgIcon-root {
+    font-size: 70px;
+  }
+
+  .MuiCheckbox-root .PrivateSwitchBase-input {
+    width: 70px;
+    height: 70px;
+  }
+
 }
