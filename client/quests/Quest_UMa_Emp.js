@@ -856,7 +856,6 @@ const surveyJSON = {
         },
         {
             name: 'Participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
-            description: 'Assinale de 1 (em nenhuma medida) a 7 (totalmente)',
             type: 'sim_qual',
             isRequired: true,
         },
