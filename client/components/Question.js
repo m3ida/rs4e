@@ -37,8 +37,6 @@ function Question(props) {
 
             return (
                 <>
-                    <h4>Participantes do curso intensivo de empreendedorismo do RS4E</h4>
-                    <p style={{ fontWeight: 'bold' }}>Formulário relativo à participação no projeto RS4E</p>
                     <div className='description'>
                         {descriptionHTML}
 

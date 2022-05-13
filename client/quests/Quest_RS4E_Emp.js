@@ -58,30 +58,6 @@ const surveyJSON = {
                 'Outra',
             ],
         },
-        // {
-        //     name: 'Teste - empreendedor',
-        //     type: 'radiogroup',
-        //     depends: {
-        //         question: 'Situação laboral',
-        //         equals: true,
-        //         value: 'Empreendedor/Dono de empresa',
-        //     },
-        //     description: 'Escolha uma e uma só das seguintes opções:',
-        //     isRequired: true,
-        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
-        // },
-        // {
-        //     name: 'Teste - não empreendedor',
-        //     type: 'radiogroup',
-        //     depends: {
-        //         question: 'Situação laboral',
-        //         equals: false,
-        //         value: 'Empreendedor/Dono de empresa',
-        //     },
-        //     description: 'Escolha uma e uma só das seguintes opções:',
-        //     isRequired: true,
-        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
-        // },
         {
             name: 'Há quantos anos criou a empresa?',
             type: 'radiogroup',
@@ -862,7 +838,7 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'Em que medida a sua participação no Curso de Empreendedorismo e Inovação Empresarial RS4E ajudou-o(a) a desenvolver os seguintes aspeto?',
+            name: 'Em que medida a sua participação no Curso de Empreendedorismo e Inovação Empresarial RS4E ajudou-o(a) a desenvolver os seguintes aspetos?',
             description: 'Assinale de 1 (em nenhuma medida) a 7 (totalmente)',
             type: 'matrix',
             elements: [

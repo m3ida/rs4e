@@ -12,8 +12,8 @@ function App() {
             <Routes>
                 {/* <Route path='QuestRS4E' element={<Panel questionsFileName={'Quest_RS4E.js'} />} />
                 <Route path='QuestUMA' element={<Panel questionsFileName={'Quest_UMa.js'} />} /> */}
-                <Route path='QuestRS4E' element={<Panel questionsFileName={'Quest_RS4E_Emp.js'} />} />
-                <Route path='QuestUMA' element={<Panel questionsFileName={'Quest_UMa_Emp.js'} />} />
+                {/* <Route path='QuestRS4E' element={<Panel questionsFileName={'Quest_RS4E_Emp.js'} />} /> */}
+                <Route path='quest' element={<Panel questionsFileName={'Quest_UMa_Emp.js'} />} />
                 <Route path='admin' element={<Admin />} />
                 <Route path='*' element={<NotFoundPage />} />
             </Routes>

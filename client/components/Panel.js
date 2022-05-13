@@ -76,12 +76,9 @@ function Panel(props) {
             }
 
             if (
-                (props.questionsFileName === 'Quest_RS4E_Emp.js' && //Em que ano participou no Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E?
-                    questionIndex === 1 &&
-                    answers[questions.elements[0].name] === 'Não participei') ||
                 (props.questionsFileName === 'Quest_UMa_Emp.js' && //Obteve a sua formação na UMa?
-                    questionIndex === 9 &&
-                    answers[questions.elements[8].name] === 'Não')
+                    questionIndex === 1 &&
+                    answers[questions.elements[0].name] === 'Não')
             ) {
                 setQuestionIndex(questions.elements.length);
             }

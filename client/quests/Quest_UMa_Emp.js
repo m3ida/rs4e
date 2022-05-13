@@ -13,8 +13,47 @@ const surveyJSON = {
         'Se você tiver alguma dúvida sobre o questionário, envie-nos um email para: carmenf@staff.uma.pt.',
     ],
     img: 'uma',
-    name:'questumaemp',
+    name: 'questumaemp',
     elements: [
+        {
+            name: 'Obteve a sua formação superior na Universidade da Madeira?',
+            type: 'radiogroup',
+            description: 'Escolha uma e uma só das seguintes opções:',
+            isRequired: true,
+            choices: ['Sim', 'Não'],
+        },
+        {
+            name: 'Participou em alguma das edições do Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E, promovido pela StartUp Madeira?',
+            type: 'radiogroup',
+            description: 'Escolha uma e uma só das seguintes opções:',
+            isRequired: true,
+            choices: ['Sim', 'Não'],
+        },
+        {
+            name: 'Em que ano participou no Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E?',
+            type: 'radiogroup',
+            description: 'Escolha uma e uma só das seguintes opções:',
+            depends: {
+                question:
+                    'Participou em alguma das edições do Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E, promovido pela StartUp Madeira?',
+                value: 'Sim',
+            },
+            isRequired: true,
+            choices: [
+                'Depois de 2019',
+                '2019',
+                '2018',
+                '2017',
+                '2016',
+                '2015',
+                '2014',
+                '2013',
+                '2012',
+                '2011',
+                '2010',
+                'Antes de 2010',
+            ],
+        },
         {
             name: 'Idade',
             type: 'radiogroup',
@@ -51,30 +90,6 @@ const surveyJSON = {
                 'Outra',
             ],
         },
-        // {
-        //     name: 'Teste - empreendedor',
-        //     type: 'radiogroup',
-        //     depends: {
-        //         question: 'Situação laboral',
-        //         equals: true,
-        //         value: 'Empreendedor/Dono de empresa',
-        //     },
-        //     description: 'Escolha uma e uma só das seguintes opções:',
-        //     isRequired: true,
-        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
-        // },
-        // {
-        //     name: 'Teste - não empreendedor',
-        //     type: 'radiogroup',
-        //     depends: {
-        //         question: 'Situação laboral',
-        //         equals: false,
-        //         value: 'Empreendedor/Dono de empresa',
-        //     },
-        //     description: 'Escolha uma e uma só das seguintes opções:',
-        //     isRequired: true,
-        //     choices: ['Solteiro(a)', 'Casado(a)/União de facto', 'Divorciado(a)', 'Outro'],
-        // },
         {
             name: 'Há quantos anos criou a empresa?',
             type: 'radiogroup',
@@ -118,13 +133,6 @@ const surveyJSON = {
             description: 'Escolha uma e uma só das seguintes opções:',
             isRequired: true,
             choices: ['Secundário', 'Licenciatura', 'Mestrado', 'Doutoramento', 'Pós-doutoramento', 'Outra'],
-        },
-        {
-            name: 'Obteve a sua formação superior na Universidade da Madeira?',
-            type: 'radiogroup',
-            description: 'Escolha uma e uma só das seguintes opções:',
-            isRequired: true,
-            choices: ['Sim', 'Não'],
         },
         {
             name: 'Qual o domínio científico/tecnológico da sua formação?',
@@ -855,7 +863,34 @@ const surveyJSON = {
             ],
         },
         {
-            name: 'Participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
+            name: 'Em que medida a sua participação no Curso de Empreendedorismo e Inovação Empresarial RS4E ajudou-o(a) a desenvolver os seguintes aspetos?',
+            description: 'Assinale de 1 (em nenhuma medida) a 7 (totalmente)',
+            type: 'matrix',
+            depends: {
+                question:
+                    'Participou em alguma das edições do Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E, promovido pela StartUp Madeira?',
+                value: 'Sim',
+            },
+            elements: [
+                {
+                    value: 'Conhecimento sobre o ambiente empreendedor',
+                },
+                {
+                    value: 'Grande reconhecimento/apreço da figura do empreendedor',
+                },
+                {
+                    value: 'A preferência por ser empreendedor',
+                },
+                {
+                    value: 'As habilidades/capacidades necessárias para se ser empreendedor',
+                },
+                {
+                    value: 'A intenção de ser empreendedor',
+                },
+            ],
+        },
+        {
+            name: 'Excluindo o Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E, participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
             type: 'sim_qual',
             isRequired: true,
         },
@@ -866,7 +901,7 @@ const surveyJSON = {
             depends: {
                 question: 'Participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
                 equals: false,
-                value: 'Não'
+                value: 'Não',
             },
             isRequired: true,
             elements: [
