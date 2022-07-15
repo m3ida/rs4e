@@ -899,7 +899,7 @@ const surveyJSON = {
             type: 'matrix',
             description: 'Escolha uma e uma só das seguintes opções:',
             depends: {
-                question: 'Participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
+                question: 'Excluindo o Curso Intensivo em Empreendedorismo e Inovação Empresarial RS4E, participou em algum curso/módulo que possa ser considerado educação para o empreendedorismo?',
                 equals: false,
                 value: 'Não',
             },
